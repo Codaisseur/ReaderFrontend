@@ -1,6 +1,7 @@
 import React from 'react';
+import AppComponent from '../AppComponent';
 
-class Topic extends React.Component {
+class Topic extends AppComponent {
   render() {
     return(
       <h1>Topic!</h1>
