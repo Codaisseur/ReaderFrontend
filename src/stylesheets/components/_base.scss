@@ -1,0 +1,41 @@
+.app {
+
+  .loader {
+    background-color: #fff;
+    background-image: url(../images/loading-bg.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    position: fixed;
+    top: 70px;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    display: none;
+
+    p {
+      position: fixed;
+      bottom: 100px;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      span::after {
+        content: '…';
+      }
+    }
+  }
+
+  &.loading {
+    &> .loader {
+      display: block;
+    }
+  }
+
+  .navbar-default .navbar-nav a.active,
+  .navbar-default .navbar-nav a.active:hover,
+  .navbar-default .navbar-nav a.active:focus {
+    color: #555;
+    background-color: #e7e7e7;
+  }
+}
