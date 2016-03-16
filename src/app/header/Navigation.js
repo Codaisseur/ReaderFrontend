@@ -18,7 +18,7 @@ class Navigation extends React.Component {
 
           <div className="collapse navbar-collapse" id="main-nav">
             <ul className="nav navbar-nav">
-              <li><Link activeClassName="active" to="/weeks">Weeks <span className="sr-only">(current)</span></Link></li>
+              <li><Link activeClassName="active" to="/weeks">Weeks</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link activeClassName="active" to="/users/sign-up">Sign up</Link></li>

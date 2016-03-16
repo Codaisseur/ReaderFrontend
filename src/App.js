@@ -1,43 +1,46 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Header from './app/Header';
 import Footer from './app/Footer';
+
+import { startLoading, stopLoading, showError, hideError } from './actions/appActions';
 
 // Load all SCSS
 import './stylesheets/components.scss';
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      loading: true,
-      error: false
-    };
+class App extends Component {
+  constructor(props) {
+    super(props);
   }
 
   classNames() {
+    const { loading, loadingMessage, error, errorMessage } = this.props;
+    console.log(this.props);
     let _classNames = ["app"];
-    if (this.state.loading) { _classNames.push("loading"); }
-    if (this.state.error) { _classNames.push("error"); }
+    if (loading) { _classNames.push("loading"); }
+    if (error) { _classNames.push("error"); }
     return _classNames.join(" ");
   }
 
   stopLoading(event) {
-    console.log("done!");
-    this.setState({
-      loading: false
-    });
+    this.props.dispatch(stopLoading());
   }
 
-  startLoading(message = null) {
-    console.log("done!");
-    this.setState({
-      loading: true,
-      loadingMessage: message
-    });
+  startLoading(message = "") {
+    this.props.dispatch(startLoading(message));
+  }
+
+  hideError(event) {
+    this.props.dispatch(hideError());
+  }
+
+  showError(message = "") {
+    this.props.dispatch(showError(message));
   }
 
   render() {
+    const { loading, loadingMessage, error, errorMessage } = this.props;
+
     let childProps = {
       onLoad: this.stopLoading.bind(this),
       onLoading: this.startLoading.bind(this)
@@ -53,13 +56,37 @@ class App extends React.Component {
         <div className="container">
           {childrenWithProps}
         </div>
-        <div className="loader">
-          <p className="message"><span>{this.state.loadingMessage}</span></p>
-        </div>
+        { loading &&
+          <div className="loader"><p className="message"><span>{loadingMessage}</span></p></div>
+        }
+        { error &&
+          <div className="error"><p className="message"><span>{errorMessage || "OMG an error!"}</span></p></div>
+        }
         <Footer />
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  loadingMessage: PropTypes.string.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const { loadingStatus, errorStatus } = state.app;
+  const { loading, loadingMessage } = loadingStatus;
+  const { error, errorMessage } = errorStatus;
+
+  return {
+    loading,
+    loadingMessage,
+    error,
+    errorMessage
+  };
+}
+
+export default connect(mapStateToProps)(App);
