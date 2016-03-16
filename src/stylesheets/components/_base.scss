@@ -1,9 +1,10 @@
 .app {
 
-  .loader {
+  .loader, .error {
     background-color: #fff;
     background-image: url(../images/loading-bg.gif);
     background-position: 50% 50%;
+    background-size: 50%;
     background-repeat: no-repeat;
     opacity: 0.6;
     position: fixed;
@@ -11,7 +12,6 @@
     bottom: 70px;
     left: 0;
     right: 0;
-    display: none;
 
     p {
       position: fixed;
@@ -26,10 +26,9 @@
     }
   }
 
-  &.loading {
-    &> .loader {
-      display: block;
-    }
+  .error {
+    background-image: url(../images/error-bg.gif);
+    color: $brand-danger;
   }
 
   .navbar-default .navbar-nav a.active,
